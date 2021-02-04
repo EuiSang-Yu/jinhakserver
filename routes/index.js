@@ -1,15 +1,9 @@
 const express = require("express");
-const usr = require("./usr");
-const mgr = require("./mgr");
 const router = express.Router();
 
-router.use("/usr", usr);
-router.use("/mgr", mgr);
+router.get("/", (req, res) => {
+  console.log("http://localhost:3001/api/");
+  res.send({ title: "hello react!" });
+});
 
 module.exports = router;
-
-/*
-set DEBUG=express:* & node index.js
-express:router
-express:application
-*/

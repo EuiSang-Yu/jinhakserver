@@ -1,15 +1,18 @@
 const express = require("express");
 const path = require("path");
-const bodyParser = require("body-parser");
-const api = require("./routes");
 const app = express();
-const port = process.env.PORT || 3001;
+const api = require("./routes/index");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const router = express.Router();
+
+app.use("/api", api);
+app.use(cors());
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/api/hello", (req, res) => {
   res.send({ message: "hello express" });
 });
 
-app.listen(port, () => console.log(`${port} 번 포트 성공`));
+app.listen(3001, () => console.log("3001 번 포트 성공"));
