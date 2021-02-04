@@ -1,0 +1,17 @@
+{
+  "dbConn": {
+    "user": "yus",
+    "password": "A!12345",
+    "database": "SES2021_DEV",
+    "server": "localhost",
+    "port": "1433",
+    "connectionTimeout": 300000,
+    "requestTimeout": 180000,
+    "pool": {
+      "max": 35,
+      "min": 5,
+      "softIdleTimeoutMillis": 300000,
+      "idleTimeoutMillis": 360000
+    }
+  }
+}

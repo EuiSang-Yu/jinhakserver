@@ -1,20 +1,31 @@
 const express = require("express");
+var sql = require("mssql");
+const { Connection } = require("tedious");
+const config = require("./../config/config.json");
 const router = express.Router();
 
-const users = [
-  { name: "홍길동", age: "25" },
-  { name: "고길동", age: "35" },
-  { name: "박길동", age: "45" }
-];
+console.log(sql.connect(config), "sql.connect");
 
-// router.get("/", (req, res) => {
-//   console.log("http://localhost:3001/api/");
-//   res.send({ title: "프론트로 데이터 넘기기성공!" });
+// sql
+//   .connect(config)
+//   .then(() => {
+//     return sql.query`select * from usr`;
+//   })
+//   .then((result) => {
+//     console.dir(result);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//     // ... error checks
+//   });
+
+// sql.on("error", (err) => {
+//   // ... error handler
 // });
 
 router.get("/", (req, res) => {
-  console.log("http://localhost:3001/api/");
-  res.send(users);
+  //console.log("http://localhost:3001/api/");
+  //res.send(sql.result);
 });
 
 module.exports = router;
