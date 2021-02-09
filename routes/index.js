@@ -1,31 +1,13 @@
 const express = require("express");
-var sql = require("mssql");
-const { Connection } = require("tedious");
-const config = require("./../config/config.json");
 const router = express.Router();
+const usr = require("./usr");
+const mgr = require("./mgr");
 
-console.log(sql.connect(config), "sql.connect");
-
-// sql
-//   .connect(config)
-//   .then(() => {
-//     return sql.query`select * from usr`;
-//   })
-//   .then((result) => {
-//     console.dir(result);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//     // ... error checks
-//   });
-
-// sql.on("error", (err) => {
-//   // ... error handler
+router.use("/usr", usr);
+router.use("/mgr", mgr);
+// router.get("/mgr", (req, res) => {
+//   console.log("서버 데이터 반환 성공");
+//   res.send({ title: "라우트 시작점 값" });
 // });
-
-router.get("/", (req, res) => {
-  //console.log("http://localhost:3001/api/");
-  //res.send(sql.result);
-});
 
 module.exports = router;

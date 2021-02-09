@@ -1,10 +1,11 @@
-const express = require("express");
-const cors = require("cors");
-const app = express();
-const api = require("./routes/index");
-const bodyParser = require("body-parser");
+var express = require("express");
+var cors = require("cors");
+var app = express();
 
 app.use(cors());
-app.use("/api", api);
+app.get("/", function (req, res) {
+  console.log(req.url);
+  res.send({ title: "아으아" });
+});
 
-app.listen(3001, () => console.log("3001 번 포트 성공"));
+app.listen(3001, () => console.log("3001 번 포트 연결"));
