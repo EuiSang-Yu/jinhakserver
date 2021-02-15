@@ -7,7 +7,8 @@ router.get("/selectAll", async (req, res) => {
   try {
     pool = await db();
     const result = await pool.request().query("SELECT * FROM USR"); // 이게안되는거같은데..
-    console.log("result : " + result.recordset);
+    // recordset : 쿼리결과
+    // console.log("result : " + result.recordset);
     res.json(result.recordset);
 
     /*
