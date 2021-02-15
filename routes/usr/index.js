@@ -5,7 +5,7 @@ const db = require("../../db");
 router.get("/selectAll", async (req, res) => {
   let pool = null;
   try {
-    pool = await db();
+    pool = await db(); // await 는 비동기인 js에서 promise 값이 사용가능해질때까지 실행을 중지시킴
     const result = await pool.request().query("SELECT * FROM USR"); // 이게안되는거같은데..
     // recordset : 쿼리결과
     // console.log("result : " + result.recordset);

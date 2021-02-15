@@ -12,8 +12,6 @@ app.use("/api", api);
 // Just start the web server
 //RUN SERVER
 let server = app.listen(port, () => {
-  console.log("3001 서버가동중");
-  // const host = server.address().host;
-  // const port = server.address().port;
-  // console.log(`Listening at http://${host}:${port}`);
+  const port = server.address().port;
+  console.log(`Listening at ${port}`);
 });
