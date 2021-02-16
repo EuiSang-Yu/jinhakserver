@@ -2,6 +2,8 @@ const express = require("express");
 const { restart } = require("nodemon");
 const router = express.Router();
 const db = require("../../db");
+const bodyParser = require("body-parser");
+const { TYPES } = require("mssql");
 
 /*
   req.body : POST 정보를 가집니다. 파싱을 위해서 body-parser와 같은 패키지가 필요합니다. 
@@ -25,12 +27,14 @@ const db = require("../../db");
   res.links, res.cookie 등이 있음. 
 */
 
+router.use(bodyParser.urlencoded({ extended: false }));
+
 // READ
 router.get("/selectAll", async (req, res) => {
   let pool = null;
   try {
     pool = await db(); // await 는 비동기인 js에서 promise 값이 사용가능해질때까지 실행을 중지시킴
-    const result = await pool.request().query("SELECT * FROM USR"); // 이게안되는거같은데..
+    let result = await pool.request().query("SELECT * FROM USR"); // 이게안되는거같은데..
     // recordset : 쿼리결과
     res.json(result.recordset);
   } catch (err) {
@@ -45,10 +49,14 @@ router.post("/regist", async (req, res) => {
   let pool = null;
   try {
     pool = await db();
-    const result = await pool
+    // input() 이들어가야되는거같은데.. 시퀀스처리를어케하지
+    let result = await pool
       .request()
+      .input("usr_no", TYPES.Int, 6)
+      .input("usr_name", TYPES.VarChar, req.body.usr_name)
+      .input("usr_age", TYPES.Int, req.body.usr_age)
       .query(
-        `INSERT INTO USR VALUES(${req.usr_no},${req.usr_name},${req.usr_age})`
+        `INSERT INTO(usr_name, usr_age) USR VALUES(${req.usr_no},${req.usr_name},${req.usr_age})`
       );
     res.send("POST OK");
   } catch (err) {
