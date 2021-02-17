@@ -26,7 +26,6 @@ const { TYPES } = require("mssql");
   이 외에도 res.set, res.status, res.type, res.sendFile, 
   res.links, res.cookie 등이 있음. 
 */
-
 router.use(bodyParser.urlencoded({ extended: false }));
 
 // READ
@@ -36,7 +35,7 @@ router.get("/selectAll", async (req, res) => {
     pool = await db(); // await 는 비동기인 js에서 promise 값이 사용가능해질때까지 실행을 중지시킴
     let result = await pool.request().query("SELECT * FROM USR"); // 이게안되는거같은데..
     // recordset : 쿼리결과
-    res.json(result.recordset);
+    res.json(result.recordset); // json 타입으로 파싱해서 send()
   } catch (err) {
     console.log(err);
     res.status(500);
