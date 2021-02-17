@@ -29,11 +29,13 @@ const { TYPES } = require("mssql");
 router.use(bodyParser.urlencoded({ extended: false }));
 
 // READ
-router.get("/selectAll", async (req, res) => {
+router.get("/selectUser", async (req, res) => {
   let pool = null;
   try {
     pool = await db(); // await 는 비동기인 js에서 promise 값이 사용가능해질때까지 실행을 중지시킴
-    let result = await pool.request().query("SELECT * FROM USR"); // 이게안되는거같은데..
+    let result = await pool
+      .request()
+      .query("SELECT * FROM USR WHERE USR_TYPE = 2");
     // recordset : 쿼리결과
     res.json(result.recordset); // json 타입으로 파싱해서 send()
   } catch (err) {
@@ -42,30 +44,5 @@ router.get("/selectAll", async (req, res) => {
     res.send(err.message);
   }
 });
-
-/*
-// CREATE
-router.post("/regist", async (req, res) => {
-  let pool = null;
-  try {
-    pool = await db();
-    // input() 이들어가야되는거같은데.. 시퀀스처리를어케하지
-    let result = await pool
-      .request()
-      .input("usr_no", TYPES.Int, 6)
-      .input("usr_name", TYPES.VarChar, req.body.usr_name)
-      .input("usr_age", TYPES.Int, req.body.usr_age)
-      .query(
-        `INSERT INTO(usr_name, usr_age) USR VALUES(${req.usr_no},${req.usr_name},${req.usr_age})`
-      );
-    res.send("POST OK");
-  } catch (err) {
-    console.log(err);
-    res.status(500);
-    res.send(err.message);
-  }
-});
-
-*/
 
 module.exports = router;
