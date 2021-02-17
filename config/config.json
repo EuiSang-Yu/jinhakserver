@@ -16,5 +16,23 @@
       },
       "parseJSON": false
     }
+  },
+  "production": {
+    "dbConn": {
+      "user": "sa",
+      "password": "A!12345",
+      "database": "SES2021_DEV",
+      "server": "localhost",
+      "port": 1433,
+      "pool": {
+        "max": 35,
+        "min": 5
+      },
+      "options": {
+        "encrypt": true,
+        "enableArithAbort": true
+      },
+      "parseJSON": false
+    }
   }
 }
