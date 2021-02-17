@@ -43,6 +43,7 @@ router.get("/selectAll", async (req, res) => {
   }
 });
 
+/*
 // CREATE
 router.post("/regist", async (req, res) => {
   let pool = null;
@@ -64,5 +65,7 @@ router.post("/regist", async (req, res) => {
     res.send(err.message);
   }
 });
+
+*/
 
 module.exports = router;
