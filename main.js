@@ -1,19 +1,20 @@
 const express = require("express");
-const path = require("path");
-let bodyParser = require("body-parser");
-let api = require("./routes");
-let port = process.env.PORT || 3001;
-let app = express();
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
-// let cors = require("cors");
-// app.use(cors());
-app.use("/api", api);
+const bodyParser = require("body-parser");
+const api = require("./routes");
+var app = express();
 
-// No need to connect the pool
-// Just start the web server
-//RUN SERVER
-let server = app.listen(port, () => {
-  const port = server.address().port;
-  console.log(`Listening at ${port}`);
+// Setup Middleware
+app.use("/api", api);
+// error handler
+app.use("/api", (req, res) => {
+  res.status(404).json({
+    error: "NULL"
+  });
+});
+
+app.set('port', process.env.PORT || 3001);
+
+// Server Run
+app.listen(app.get('port'), () => {
+  console.log("running at port " + app.get('port'));
 });
