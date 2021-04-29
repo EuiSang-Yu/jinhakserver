@@ -3,14 +3,9 @@ const bodyParser = require("body-parser");
 const api = require("./routes");
 var app = express();
 
+app.use(bodyParser.json());
 // Setup Middleware
 app.use("/api", api);
-// error handler
-app.use("/api", (req, res) => {
-  res.status(404).json({
-    error: "NULL"
-  });
-});
 
 app.set('port', process.env.PORT || 3001);
 

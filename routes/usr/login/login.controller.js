@@ -25,9 +25,11 @@ const db = require("../../../config/db");
 */
 
 const login = async (req, res) => {
-  const id = req.body.id;
-  const pwd = req.body.pwd;
-
+  // console.log(req.body);
+  const {
+    memId,
+    memPwd
+  } = req.body;
 
   const chkQuery = (query) => {
     if (typeof query === "string") {
@@ -41,11 +43,11 @@ const login = async (req, res) => {
   // await 는 비동기인 js에서 promise 값이 사용가능해질때까지 실행을 중지시킴
   // UPDATE시 파라미터는 배열로 만들어서 db.query(쿼리, [A, B]) 
   // INSERT시 Object("key":value)로 만들어서 db.query(쿼리, Object)
-  const result = await db.query(chkQuery(sql.login), [id, pwd], (error, rows) => {
+  const result = await db.query(chkQuery(sql.login), [memId, memPwd], (error, rows) => {
     if (!error)
       return {
         success: true,
-        data: rows,
+        data: rows
       };
     else
       return {
@@ -54,10 +56,12 @@ const login = async (req, res) => {
       };
   });
 
-  res.json(result); // json 타입으로 파싱해서 send()
-
   // DB 연결 해제
   db.end();
+
+  return res.status(200).json({
+    result
+  }); // json 타입으로 파싱해서 send()
 };
 
 module.exports = {

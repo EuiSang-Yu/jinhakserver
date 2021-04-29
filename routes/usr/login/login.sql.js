@@ -1,5 +1,10 @@
 const login = [
-  "SELECT * FROM MEMBER WHERE id = ? AND pwd = ?;"
+  `
+  SELECT 'X'
+  FROM MEMBER 
+  WHERE 1=1
+  AND memId = ? AND memPwd = ?
+  `
 ];
 
 module.exports = {
