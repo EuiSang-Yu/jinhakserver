@@ -1,6 +1,4 @@
-const mysql = require("mysql");
-const sql = require("./login.sql");
-const db = require("../../../config/db");
+const DB = require("../../../../dbhelper.js");
 
 /*
   req.body : POST 정보를 가집니다. 파싱을 위해서 body-parser와 같은 패키지가 필요합니다. 
@@ -24,46 +22,21 @@ const db = require("../../../config/db");
   res.links, res.cookie 등이 있음. 
 */
 
+// 로그인
 const login = async (req, res) => {
-  // console.log(req.body);
-  const {
-    memId,
-    memPwd
-  } = req.body;
+  var { memId, memPwd } = await req.body;
+  console.log("req.body: " + JSON.stringify(req.body));
 
-  const chkQuery = (query) => {
-    if (typeof query === "string") {
-      return query;
-    }
-    return query.join("\r\n");
-  }
-
-  // DB 연결 호출
-  db.connect();
-  // await 는 비동기인 js에서 promise 값이 사용가능해질때까지 실행을 중지시킴
-  // UPDATE시 파라미터는 배열로 만들어서 db.query(쿼리, [A, B]) 
-  // INSERT시 Object("key":value)로 만들어서 db.query(쿼리, Object)
-  const result = await db.query(chkQuery(sql.login), [memId, memPwd], (error, rows) => {
-    if (!error)
-      return {
-        success: true,
-        data: rows
-      };
-    else
-      return {
-        success: false,
-        error: error.message
-      };
+  DB(
+    "POST",
+    `SELECT memId, memPwd FROM MEMBER WHERE memId = ${memId} AND memPwd = ${memPwd}`,
+    []
+  ).then((res) => {
+    console.log("DB성공 : " + res);
+    return res.status(200).json({ res });
   });
-
-  // DB 연결 해제
-  db.end();
-
-  return res.status(200).json({
-    result
-  }); // json 타입으로 파싱해서 send()
 };
 
 module.exports = {
-  login: login
+  login
 };
